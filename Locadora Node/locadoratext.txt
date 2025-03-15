@@ -1,0 +1,222 @@
+create database bdlocadora_ds;
+
+use bdlocadora_ds;
+
+create table Clientes(
+  clienteCPF integer(9) not null primary key,
+  clienteNome varchar(40) not null,
+  clienteEnde varchar(60) not null,
+  clienteTel varchar(15) not null,
+  clienteCidade varchar(60) not null,
+  clienteDataNasc date not null,
+  clienteCNH integer(11) not null,
+  clienteCNHCat varchar(2) not null
+  );
+
+create table Funcionarios(
+  funcMatricula integer(4) not null primary key,
+  funcNome varchar(40) not null,
+  funcDepto integer(1) not null,
+  funcSalario decimal(8,2) not null,
+  funcAdimissao date not null,
+  funcFilho integer(1) not null,
+  funcSexo varchar(1) not null,
+  funcAtivo tinyint(1) not null
+  );
+
+create table Veiculos(
+  veicPlaca char(7) not null primary key,
+  veicMarca varchar(15) not null,
+  veicModelo varchar(15) not null,
+  veicCor varchar(15),
+  veicAno integer(4) not null,
+  veicComb char(1),
+  veicCat integer(1),
+  veicStatusAlocado tinyint(1) not null
+  );
+
+create table Departamento(
+  DeptoCod integer(11) not null primary key,
+  DeptoNome varchar(20) not null
+  );
+
+create table Categoria(
+  CatCod integer(11) not null primary key,
+  CatNome varchar(20) not null,
+  CatValor_km decimal(8,2) not null
+  );
+
+create table Combustivel(
+  CombTipo char(1) not null primary key,
+  CombNome varchar(20)
+    );
+
+create table Ordem_de_Servico(
+  OsNum integer(11) not null,
+  OsFuncMat integer(4) not null,
+  OsClienteCPF int(9) not null,
+  OsVeicPlaca char(7) not null,
+  OsDataRetirada date not null,
+  OsDataDevolucao date,
+  OsKMRetirada decimal(8,2) not null,
+  OsKMDevolucao decimal(8,2) not null,
+  OsStatus tinyint(1) not null,
+  OsValorPgto decimal(8,2)
+    );
+
+create table Usuarios(
+  UsuarioLogin integer(11) not null primary key,
+  UsuarioSenha varchar(8) not null,
+  UsuarioFuncMat integer(4),
+  UsuarioSetor integer(11) not null,
+  UsuarioStatus tinyint(1)
+      ); 
+
+ALTER TABLE funcionarios ADD CONSTRAINT FOREIGN KEY (funcDepto) REFERENCES departamento(DeptoCod);
+
+ALTER TABLE veiculos ADD CONSTRAINT FOREIGN KEY (VeicComb) REFERENCES combustivel(CombTipo);
+
+ALTER TABLE veiculos ADD CONSTRAINT FOREIGN KEY (VeicCat) REFERENCES Categoria(CatCod);
+
+ALTER TABLE ordem_de_servico ADD CONSTRAINT FOREIGN KEY (OsVeicPlaca) REFERENCES veiculos(VeicPlaca);
+
+ALTER TABLE Ordem_de_Servico ADD CONSTRAINT FOREIGN KEY (OsClienteCPF) REFERENCES clientes(ClienteCPF);
+
+ALTER TABLE Ordem_de_Servico ADD CONSTRAINT FOREIGN KEY (OsFuncMat) REFERENCES Funcionarios(funcMatricula);
+
+ALTER TABLE Usuarios ADD CONSTRAINT FOREIGN KEY (UsuarioFuncMat) REFERENCES funcionarios(funcMatricula);
+
+INSERT INTO Departamento(DeptoCod, DeptoNome) values(1,'Atendimento');
+INSERT INTO Departamento(DeptoCod, DeptoNome) values(2,'Administrativo');
+INSERT INTO Departamento(DeptoCod, DeptoNome) values(3,'Financeiro');
+INSERT INTO Departamento(DeptoCod, DeptoNome) values(4,'Diretoria');
+INSERT INTO Departamento(DeptoCod, DeptoNome) values(5,'Copa');
+ 
+INSERT INTO Combustivel(CombTipo, CombNome) values('A','Alcool');
+INSERT INTO Combustivel(CombTipo, CombNome) values('D','Diesel');
+INSERT INTO Combustivel(CombTipo, CombNome) values('F','Flex');
+INSERT INTO Combustivel(CombTipo, CombNome) values('G','Gasolina');
+ 
+INSERT INTO Categoria (CatCod, CatNome, CatValor_km) VALUES (1, 'Basico', 0.49);
+INSERT INTO Categoria (CatCod, CatNome, CatValor_km) VALUES (2, 'Utilitario', 0.51);
+INSERT INTO Categoria (CatCod, CatNome, CatValor_km) VALUES (3, 'Luxo', 0.53);
+INSERT INTO Categoria (CatCod, CatNome, CatValor_km) VALUES (4, 'Especial', 0.55);
+ 
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(123456789,'João Silva','Rua das Flores, 123','(11) 98765-4321','São Paulo','1985-04-12',12345678900,'B');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(987654321,'Maria Oliveira','Avenida Paulista, 456','(11) 91234-5678','São Paulo','1990-08-22',98765432101,'A');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(111222333,'Pedro Santos','Rua da Praia, 789','(21) 98765-1234','Rio de Janeiro','1978-11-30',11122233344,'AB');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(444555666,'Ana Costa','Rua dos Jacarandas, 101','(31) 92345-6789','Belo Horizonte','1982-05-16',44455566677,'B');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(777888999,'Carlos Pereira','Rua das Acacias, 202','(61) 98765-4321','Brasilia','1995-07-25',77788899900,'C');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(222333444,'Laura Mendes','Avenida Brasil, 303','(41) 91234-5678','Curitiba','1988-12-10',22233344411,'B');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(555666777,'Lucas Almeida','Rua das Palmeiras, 404','(21) 99876-5432','Rio de Janeiro','1993-03-05',55566677722,'A');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(888999000,'Fernanda Lima','Rua das Orquideas, 505','(71) 98765-6789','Salvador','1987-09-17',88899900033,'AB');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(333444555,'Gustavo Rocha','Avenida Sete, 606','(11) 93456-7890','São Paulo','1980-01-20',33344455544,'C');
+INSERT INTO Clientes(clienteCPF, clienteNome, clienteEnde, clienteTel, clienteCidade, clienteDataNasc, clienteCNH, clienteCNHCat) values(666777888,'Juliana Campos','Rua dos Girassois, 707','(31) 91567-8901','Belo Horizonte','1991-06-12',66677788855,'B');
+ 
+INSERT INTO Funcionarios (funcMatricula, funcNome, funcDepto, funcSalario, funcAdimissao, funcFilho, funcSexo, funcAtivo) VALUES
+(1001, 'Francisco de Oliveira', 1, 1800.00, '2001-11-20', 0, 'M', 1),
+(1002, 'Ana Maria Andrade', 2, 3200.00, '1999-02-13', 1, 'F', 1),
+(1003, 'Antônio Andrade de Oliveira', 3, 4800.00, '2007-11-05', 3, 'M', 1),
+(1004, 'Maria Abelarda da Silva', 5, 937.00, '1997-03-01', 5, 'F', 1),
+(1005, 'Manoel Trindade', 4, 7850.50, '1997-01-02', 3, 'M', 1),
+(1006, 'Alexandre Barbosa', 1, 1800.00, '2000-06-08', 2, 'M', 1),
+(1007, 'Rosana Campoy', 2, 3020.00, '2004-07-24', 3, 'F', 1),
+(1008, 'Janaína Albuquerque', 3, 4500.00, '1999-03-25', 0, 'F', 1),
+(1009, 'Roberto Silva Junior', 1, 1810.00, '2003-07-07', 0, 'M', 1),
+(1010, 'Carlos Eduardo Siqueira', 4, 7890.00, '2009-08-04', 1, 'M', 1),
+(1011, 'Heitor Sampaio', 1, 3450.00, '2011-03-05', 1, 'M', 1),
+(1012, 'Célia Menezes', 1, 1980.00, '2008-07-18', 0, 'F', 1),
+(1013, 'José Alves Costa', 1, 1650.00, '2000-09-11', 1, 'M', 1),
+(1014, 'Arlinda Medeiros', 5, 937.00, '2000-05-03', 5, 'F', 1),
+(1015, 'Josefina Sarmento', 4, 6789.00, '1997-01-02', 1, 'F', 1),
+(1016, 'Wendell Navarro Perez', 3, 1212.00, '2004-04-15', 2, 'M', 1),
+(1017, 'Rodolfo Rodrigues', 1, 8500.00, '2022-09-10', 2, 'M', 1);
+ 
+INSERT INTO Veiculos (veicPlaca, veicMarca, veicModelo, veicCor, veicAno, veicComb, veicCat, veicStatusAlocado) VALUES
+('ABW4007', 'VW', 'Jetta', 'Preto', 2022, 'F', 3, 1),
+('ACZ3243', 'VW', 'Fusca', 'Rosa', 1956, 'G', 4, 1),
+('ADE3456', 'Chevrolet', 'Camaro', 'Amarelo', 2022, 'G', 4, 1),
+('ADW2456', 'VW', 'Gol', 'Vermelho', 2021, 'A', 1, 1),
+('ADX1473', 'Ford', 'Ka', 'Branco', 2021, 'A', 1, 1),
+('AQW1234', 'Ford', 'Fusion', 'Preto', 2022, 'F', 3, 1),
+('AQX3451', 'Porsche', 'Carrera', 'Preto', 2022, 'G', 4, 1),
+('AQY2005', 'Chevrolet', 'S10', 'Branco', 2022, 'D', 2, 1),
+('ASX3232', 'Ford', 'Ka', 'Marrom', 2022, 'F', 1, 1),
+('AVX4003', 'VW', 'Amarok', 'Preto', 2022, 'D', 2, 1),
+('AWQ3703', 'Chevrolet', 'Omega', 'Preto', 2022, 'G', 3, 1),
+('AWS2365', 'Chevrolet', 'Cruze', 'Azul', 2022, 'F', 3, 1),
+('AWV1234', 'Fiat', 'Palio', 'Branco', 2021, 'F', 1, 0),
+('AWV1323', 'VW', 'Gol', 'Branco', 2022, 'F', 1, 0),
+('AWY4546', 'Fiat', 'Fiorino', 'Branco', 2021, 'A', 2, 1),
+('AZX3273', 'VW', 'Fox', 'Azul', 2021, 'F', 1, 1);
+
+
+DELIMITER $$
+
+CREATE TRIGGER Funcn
+AFTER INSERT ON Funcionarios
+FOR EACH ROW
+BEGIN
+ 
+SET @novaSenha = REPLACE(DATE_FORMAT(NEW.funcAdimissao, '%Y%m%d'), '-', '');
+INSERT INTO Usuarios(UsuarioLogin, UsuarioSenha, UsuarioFuncMat, UsuarioSetor, UsuarioStatus)
+VALUES (NEW.funcMatricula, @novaSenha, NEW.funcMatricula, NEW.funcDepto, NEW.funcAtivo);
+END $$
+ 
+DELIMITER ;
+;
+
+DELIMITER $$
+
+CREATE TRIGGER fVeic
+AFTER INSERT ON Ordem_de_Servico
+FOR EACH ROW 
+BEGIN 
+
+UPDATE Veiculos
+SET veicStatusAlocado = 1 
+WHERE veicPlaca = NEW.OsVeicPlaca;
+END $$
+
+DELIMITER ;
+;
+
+DELIMITER $$
+
+CREATE TRIGGER `fVeic2`
+AFTER UPDATE ON `Ordem_de_Servico` 
+FOR EACH ROW 
+BEGIN
+
+IF NEW.OsDataDevolucao IS NOT NULL THEN
+UPDATE Veiculos
+SET veicStatusAlocado = 0
+WHERE veicPlaca = NEW.OsVeicPlaca;
+END IF;
+END $$
+
+DELIMITER ;
+;
+
+DELIMITER $$
+ 
+CREATE TRIGGER fpag
+BEFORE INSERT ON `Ordem_de_Servico`
+FOR EACH ROW
+BEGIN
+ 
+IF NEW.OsKMDevolucao IS NOT NULL THEN
+SET @dif = NEW.OsKMDevolucao - NEW.OsKMRetirada;
+ 
+SELECT CatValor_km INTO @valorpkm
+FROM Categoria
+WHERE CatCod = (SELECT veicCat FROM Veiculos WHERE veicPlaca = NEW.OsVeicPlaca);
+
+SET NEW.OsValorPgto = @dif * @valorpkm;
+
+END IF;
+END $$
+ 
+DELIMITER ;
+;
+

@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Locadora 2DS</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container" id="login">
+        <div class="box">
+            <h2>Login</h2>
+            <form action="/auth/login" method="POST">
+                <input type="text" name="usuario" placeholder="Usuário" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+                <div class="button-group">
+                    <button type="submit">Entrar</button>
+                    <button type="button" onclick="closeLogin()">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

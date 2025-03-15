@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora 2DS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div class="container" id="login">
+        <div class="box">
+            <h2>Login</h2>
+            <form>
+                <input type="text" id="login-user" placeholder="Usuário">
+                <input type="password" id="login-pass" placeholder="Senha">
+                <div class="button-group">
+                    <button type="button" onclick="login()">Entrar</button>
+                    <button type="button" onclick="closeLogin()">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tela Principal -->
+    <div class="container" id="main" style="display:none;">
+        <!-- Menu de Navegação -->
+        <div class="nav-container">
+            <h1>Locadora 2DS</h1>
+            <nav>
+                <ul>
+                    <li><button onclick="showPage('clientes')">Clientes</button></li>
+                    <li><button onclick="showPage('funcionarios')">Funcionários</button></li>
+                    <li><button onclick="showPage('veiculos')">Veículos</button></li>
+                    <li><button onclick="showPage('ordens')">Ordens de Serviço</button></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro de Clientes -->
+    <div class="container cadastro-container" id="clientes" style="display:none; flex-direction: row;">
+        <div class="box">
+            <h2>Cadastro de Clientes</h2>
+            <form>
+                <input type="text" id="clienteCPF" placeholder="CPF">
+                <input type="text" id="clienteNome" placeholder="Nome Completo">
+                <input type="date" id="clienteDataNasc">
+                <input type="text" id="clienteEnde" placeholder="Endereço Completo">
+                <input type="tel" id="clienteTel" placeholder="Telefone (##) #####-####">
+                <input type="text" id="clienteCidade" placeholder="Cidade">
+                <input type="number" id="clienteCNH" placeholder="CNH">
+                <input type="text" id="clienteCNHCat" placeholder="Categoria do CNH">
+
+                <div class="button-group">
+                    <button type="button" onclick="clearForm('clientes')">Novo</button>
+                    <button type="button" onclick="salvarRegistro('clientes')">Salvar</button>
+                    <button type="button" onclick="editarRegistro('clientes')">Editar</button>
+                    <button type="button" onclick="cancelar('clientes')">Cancelar</button>
+                    <button type="button" onclick="excluirRegistroCliente()">Excluir</button>
+                </div>
+            </form>
+        </div>
+        <div class="box" id="Clibusc">
+            <h2>Buscar Clientes</h2>
+            <form>
+                <input type="text" id="buscarCliente" placeholder="Digite o CPF do cliente">
+            </form>
+            <button id="probut" onclick="ProcurarCli()">Procurar</button>
+
+        <table id="clientesTable">
+            <thead>
+                <tr>
+                    <th>CPF</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro de Funcionários -->
+    <div class="container cadastro-container" id="funcionarios" style="display:none; flex-direction: row;">
+        <div class="box">
+            <h2>Cadastro de Funcionários</h2>
+            <form>
+                <input type="text" id="funcMatricula" placeholder="Matricula">
+                <input type="text" id="funcNome" placeholder="Nome Completo">
+                <input type="date" id="funcAdimissao">
+                <input type="text" id="funcDepto" placeholder="Departamento">
+                <input type="text" id="funcSalario" placeholder="Salário">
+                <input type="number" id="funcFilho" placeholder="Quantos filhos">
+                <select id="funcSexo">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+                <div class="status-container">
+                    <label><input type="radio" name="funcAtivo" value="1"> Ativo</label>
+                    <label><input type="radio" name="funcAtivo" value="0"> Inativo</label>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="clearForm('funcionarios')">Novo</button>
+                    <button type="button" onclick="salvarRegistro('funcionarios')">Salvar</button>
+                    <button type="button" onclick="editarRegistro('funcionarios')">Editar</button>
+                    <button type="button" onclick="cancelar('funcionarios')">Cancelar</button>
+                    <button type="button" onclick="excluirRegistroFuncionario()">Excluir</button>
+                </div>
+            </form>
+        </div>
+        <div class="box" id="Funcbusc">
+            <h2>Buscar Funcionários </h2>
+            <form>
+                <input type="text" id="buscarFuncionario" placeholder="Digite a matricula do funcionario">
+            </form>
+            <button id="probut" onclick="ProcurarFun()">Procurar</button>
+
+            <table id="funcionariosTable">
+                <thead>
+                    <tr>
+                        <th>Matrícula</th>
+                        <th>Nome</th>
+                        <th>Departamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro de Veículos -->
+    <div class="container cadastro-container" id="veiculos" style="display:none; flex-direction: row;">
+        <div class="box">
+            <h2>Cadastro de Veículos</h2>
+            <form>
+                <input type="text" id="veicPlaca" placeholder="Placa">
+                <input type="text" id="veicModelo" placeholder="Modelo">
+                <input type="text" id="veicMarca" placeholder="Marca">
+                <input type="number" id="veicAno" placeholder="Ano">
+                <input type="text" id="veicCor" placeholder="Cor">
+                <input type="number" id="veicCat" placeholder="Categoria">
+                <input type="text" id="veicComb" placeholder="Combustivel">
+
+                <div class="status-container">
+                    <label><input type="radio" name="veicStatusAlocado" value="1"> Alocado</label>
+                    <label><input type="radio" name="veicStatusAlocado" value="0"> Disponivel</label>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="clearForm('veiculos')">Novo</button>
+                    <button type="button" onclick="salvarRegistro('veiculos')">Salvar</button>
+                    <button type="button" onclick="editarRegistro('veiculos')">Editar</button>
+                    <button type="button" onclick="cancelar('veiculos')">Cancelar</button>
+                    <button type="button" onclick="excluirRegistroVeiculo()">Excluir</button>
+                </div>
+            </form>
+        </div>
+        <div class="box" id="Veicbusc">
+            <h2>Buscar Veículos</h2>
+            <form>
+                <input type="text" id="buscarVeiculo" placeholder="Digite a placa do veiculo">
+            </form>
+            <button id="probut" onclick="ProcurarVei()">Procurar</button>
+
+                 <!-- Tabela de registros de veículos -->
+        <table id="veiculosTable">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Tela de Cadastro de Ordens de Serviço -->
+    <div class="container cadastro-container" id="ordens" style="display:none; flex-direction: row;">
+        <div class="box">
+            <h2>Cadastro de Ordens de Serviço</h2>
+            <form>
+                <input type="text" id="OsNum" placeholder="Número da Ordem">
+                <input type="text" id="OsFuncMat" placeholder="CPF do Cliente">
+                <input type="text" id="OsClienteCPF" placeholder="CPF do Cliente">
+                <input type="text" id="OsVeicPlaca" placeholder="Placa do Veículo">
+
+                <label> Data de Retirada <input type="date" id="OsDataRetirada"></label>
+                <label> Data de Devolução <input type="date" id="OsDataDevolucao"></label>
+
+                <input type="text" id="OsKMRetirada" placeholder="Quilometragem na Retirada">
+                <input type="text" id="OsKMDevolucao" placeholder="Quilometragem na Devolução">
+                <input type="text" id="OsValorPgto" placeholder="Valor Pago">
+                <div class="status-container">
+                    <label><input type="radio" name="OsStatus" value="1"> Ativo</label>
+                    <label><input type="radio" name="OsStatus" value="0"> Inativo</label>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="clearForm('ordens')">Novo</button>
+                    <button type="button" onclick="salvarRegistro('ordens')">Salvar</button>
+                    <button type="button" onclick="editarRegistro('ordens')">Editar</button>
+                    <button type="button" onclick="cancelar('ordens')">Cancelar</button>
+                    <button type="button" onclick="excluirRegistroOrdemServico()">Excluir</button>
+                </div>
+            </form>
+        </div>
+        <div class="box" id="OrdBusc">
+            <h2>Buscar Ordens de Serviço</h2>
+            <form>
+                <input type="text" id="buscarOrdem" placeholder="Digite o numero da ordem">
+            </form>
+            <button id="probut" onclick="ProcurarOds()">Procurar</button>
+
+                    <!-- Tabela de registros de ordens de serviço -->
+        <table id="ordensTable">
+            <thead>
+                <tr>
+                    <th>Número da Ordem</th>
+                    <th>CPF do Cliente</th>
+                    <th>Placa do Veículo</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tela de Gerenciamento de Usuários -->
+<div class="container cadastro-container" id="gerenciamento" style="display:none; flex-direction: row;">
+    <div class="box">
+        <h2>Gerenciamento de Usuários</h2>
+        <form>
+            <input type="text" id="usuario" placeholder="Usuário">
+            <input type="password" id="senha" placeholder="Senha">
+            <select id="departamento">
+                <option value="Atendimento">Atendimento</option>
+                <option value="Administrativo e Financeiro">Administrativo e Financeiro</option>
+                <option value="Diretoria">Diretoria</option>
+                <option value="Cópia">Cópia</option>
+            </select>
+            <div class="button-group">
+                <button type="button" onclick="salvarRegistro('usuarios')">Salvar</button>
+                <button type="button" onclick="editarRegistro('usuarios')">Editar</button>
+                <button type="button" onclick="excluirRegistro('usuarios')">Excluir</button>
+            </div>
+        </form>
+    </div>
+    <div class="box">
+        <h2>Lista de Usuários</h2>
+        <table id="usuariosTable">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Departamento</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tela de Categorias de Veículos -->
+<div class="container cadastro-container" id="categorias" style="display:none; flex-direction: row;">
+    <div class="box">
+        <h2>Cadastro de Categorias de Veículos</h2>
+        <form>
+            <input type="text" id="categoriaVeiculo" placeholder="Nome da Categoria">
+            <div class="button-group">
+                <button type="button" onclick="salvarRegistro('categorias')">Salvar</button>
+                <button type="button" onclick="editarRegistro('categorias')">Editar</button>
+                <button type="button" onclick="excluirRegistro('categorias')">Excluir</button>
+            </div>
+        </form>
+    </div>
+    <div class="box">
+        <h2>Lista de Categorias</h2>
+        <table id="categoriasTable">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tela de Departamentos -->
+<div class="container cadastro-container" id="departamentos" style="display:none; flex-direction: row;">
+    <div class="box">
+        <h2>Cadastro de Departamentos</h2>
+        <form>
+            <input type="text" id="nomeDepartamento" placeholder="Nome do Departamento">
+            <div class="button-group">
+                <button type="button" onclick="salvarRegistro('departamentos')">Salvar</button>
+                <button type="button" onclick="editarRegistro('departamentos')">Editar</button>
+                <button type="button" onclick="excluirRegistro('departamentos')">Excluir</button>
+            </div>
+        </form>
+    </div>
+    <div class="box">
+        <h2>Lista de Departamentos</h2>
+        <table id="departamentosTable">
+            <thead>
+                <tr>
+                    <th>Departamento</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tela de Tipos de Combustível -->
+<div class="container cadastro-container" id="combustiveis" style="display:none; flex-direction: row;">
+    <div class="box">
+        <h2>Cadastro de Tipos de Combustível</h2>
+        <form>
+            <input type="text" id="tipoCombustivel" placeholder="Tipo de Combustível">
+            <div class="button-group">
+                <button type="button" onclick="salvarRegistro('combustiveis')">Salvar</button>
+                <button type="button" onclick="editarRegistro('combustiveis')">Editar</button>
+                <button type="button" onclick="excluirRegistro('combustiveis')">Excluir</button>
+            </div>
+        </form>
+    </div>
+    <div class="box">
+        <h2>Lista de Tipos de Combustível</h2>
+        <table id="combustiveisTable">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

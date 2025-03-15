@@ -1,0 +1,223 @@
+/* Estilo geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+/* Menu de navegação fixo no topo */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #004A99;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-container h1 {
+    font-size: 24px;
+}
+
+.nav-container nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    margin-right: 20px;
+}
+
+.nav-container nav ul li button {
+    background-color: #004A99;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-container nav ul li button:hover {
+    background-color: #003366;
+}
+
+/* Ajuste para o conteúdo para não ficar atrás do menu */
+.container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+/* Estilo dos boxes de conteúdo */
+.box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.box h2 {
+    color: #004A99;
+    margin-bottom: 15px;
+    font-size: 25px;
+    text-align: center;
+}
+
+/* Estilo dos formulários */
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+form .button-group button {
+    background-color: #004A99;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+form .button-group button:hover {
+    background-color: #003366;
+}
+
+/* Estilo dos botões de status */
+.status-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.status-container label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.status-button {
+    background-color: #004A99;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.status-button:hover {
+    background-color: #003366;
+}
+
+.status-button.inactive {
+    background-color: #ccc;
+    color: #666;
+}
+
+.status-button.inactive:hover {
+    background-color: #999;
+}
+
+#probut{
+    background-color: #004A99;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .nav-container h1 {
+        font-size: 20px;
+    }
+
+    .nav-container nav ul li button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .box {
+        max-width: 90%;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #004A99;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para as novas telas de Diretoria */
+#gerenciamento, #categorias, #departamentos, #combustiveis {
+    display: none;
+}
+
+#gerenciamento .box, #categorias .box, #departamentos .box, #combustiveis .box {
+    width: 45%;
+    margin: 10px;
+}
+
+#gerenciamento table, #categorias table, #departamentos table, #combustiveis table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#gerenciamento table th, #categorias table th, #departamentos table th, #combustiveis table th,
+#gerenciamento table td, #categorias table td, #departamentos table td, #combustiveis table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#gerenciamento table th, #categorias table th, #departamentos table th, #combustiveis table th {
+    background-color: #004A99;
+    color: white;
+}
+
+
